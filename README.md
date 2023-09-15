@@ -1,4 +1,4 @@
-# My second project in subject Lab211 - Product Management
+# My second project in Lab211 - Vehicle Management
 
 ## Through this project student can:
 
