@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,6 +26,15 @@ public class Utils {
         System.out.println("| 6. Display all Vehicle            |");
         System.out.println("| 7. Saving Vehicle to file         |");
         System.out.println("| 8. Printing Vehicle               |");
+        System.out.println("| Other. Quit                       |");
+        System.out.println("=====================================");
+    }
+
+    public static void subMenuSearch() {
+        System.out.println("");
+        System.out.println("=====================================");
+        System.out.println("| 1. Search by name                 |");
+        System.out.println("| 2. Search by id                   |");
         System.out.println("| Other. Quit                       |");
         System.out.println("=====================================");
     }
@@ -151,8 +163,10 @@ public class Utils {
                 getVehicle(s).setBrand(brand);
             }
             System.out.println(getVehicle(s).toString());
-        } else System.out.println("Vehicle does not exist");
-        
+        } else {
+            System.out.println("Vehicle does not exist");
+        }
+
     }
 
     public static void deleteVehicle() {
@@ -171,8 +185,36 @@ public class Utils {
             ve.remove(getVehicle(s));
         }
     }
-    
-    public static void searchVehicle(){
-        
+
+    public static void searchVehicleByName() {
+        List<Vehicle> search = new ArrayList<>();
+        System.out.print("Search Name: ");
+        String name = sc.nextLine().toLowerCase();
+        for (Vehicle o : ve) {
+            if(o.getName().contains(name)){
+                search.add(o);
+            }
+        }
+        Collections.sort(search, new Comparator<Vehicle>() {
+            @Override
+            public int compare(Vehicle t, Vehicle t1) {
+                return t.getName().compareTo(t1.getName());
+            }
+        });
+        for (Vehicle o : search) {
+            System.out.println(o.toString());
+        }
+    }
+    public static void searchVehicleByID(){
+        String ID;
+        while (true) {
+            ID = Validation.getNoneBlankString("Input id: ", "ID invalid");
+            ID = ID.toUpperCase();
+            if (!Validation.isID(ID) && getVehicle(ID) == null) {
+                break;
+            } else {
+                System.out.println("ID must be VE_xxxxx");
+            }
+        }
     }
 }
