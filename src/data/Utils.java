@@ -3,6 +3,7 @@ package data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +15,7 @@ public class Utils {
 
     public static List<Vehicle> ve = new ArrayList<>();
     private static Scanner sc = new Scanner(System.in);
+    public static int oldsize;
 
     public static void mainMenu() {
         System.out.println("");
@@ -62,6 +64,7 @@ public class Utils {
                 }
             }
         }
+        oldsize = a.size();
         return a;
     }
 
@@ -70,20 +73,33 @@ public class Utils {
         while (true) {
             ID = Validation.getNoneBlankString("Input id: ", "ID invalid");
             ID = ID.toUpperCase();
-            if (!Validation.isID(ID) && getVehicle(ID) == null) {
-                break;
+            if (!Validation.isID(ID)) {
+                System.err.println("ID must be VExxxxx");
+            } else if (getVehicle(ID) != null) {
+                System.err.println("ID already exist");
             } else {
-                System.out.println("ID must be VE_xxxxx");
+                break;
             }
         }
-        String name = Validation.getNoneBlankString("Input name", "Name not valid");
+        String name = Validation.getNoneBlankString("Input name: ", "Name not valid");
         name = name.toLowerCase();
-        String color = Validation.getNoneBlankString("Input color", "Color not valid");
-        int price = Validation.getInt("Input price", "Please input number");
+        String color = Validation.getNoneBlankString("Input color: ", "Color not valid");
+        int price = Validation.getInt("Input price: ", "Please input number");
         String brand = Validation.getNoneBlankString("Input brand: ", "Brand not valid");
         String type = Validation.getNoneBlankString("Input type: ", "Type not valid");
-        int year = Validation.getInt("Input year: ", "Year not valid");
+        int year;
+        while (true) {
+            year = Validation.getInt("Input year: ", "Year not valid");
+            if (year <= 0) {
+                System.err.println("Year not valid");
+            } else {
+                break;
+            }
+        }
         ve.add(new Vehicle(ID, name, color, price, brand, type, year));
+        System.out.println(ve.size());
+        System.out.println("ADD SUCCESSFULLY");
+
     }
 
     public static Vehicle getVehicle(String id) {
@@ -102,10 +118,10 @@ public class Utils {
     public static void existVehicle() {
         String s;
         while (true) {
-            s = Validation.getNoneBlankString("Enter ID to check", "ID invalid");
-            s = s.toLowerCase();
+            s = Validation.getNoneBlankString("Input id: ", "ID invalid");
+            s = s.toUpperCase();
             if (!Validation.isID(s)) {
-                System.out.println("ID must be VE_xxxxx");
+                System.err.println("ID must be VExxxxx");
             } else {
                 break;
             }
@@ -120,10 +136,10 @@ public class Utils {
     public static void updateVehicle() {
         String s;
         while (true) {
-            s = Validation.getNoneBlankString("Enter ID to check", "ID invalid");
+            s = Validation.getNoneBlankString("Enter ID to check: ", "ID invalid");
             s = s.toUpperCase();
             if (!Validation.isID(s)) {
-                System.out.println("ID must be VE_xxxxx");
+                System.out.println("ID must be VExxxxx");
             } else {
                 break;
             }
@@ -172,9 +188,9 @@ public class Utils {
     public static void deleteVehicle() {
         String s;
         while (true) {
-            s = Validation.getNoneBlankString("Enter ID to check", "ID invalid");
+            s = Validation.getNoneBlankString("Enter ID to check: ", "ID invalid");
             if (!Validation.isID(s)) {
-                System.out.println("ID must be VE_xxxxx");
+                System.out.println("ID must be VExxxxx");
             } else {
                 break;
             }
@@ -191,7 +207,7 @@ public class Utils {
         System.out.print("Search Name: ");
         String name = sc.nextLine().toLowerCase();
         for (Vehicle o : ve) {
-            if(o.getName().contains(name)){
+            if (o.getName().contains(name)) {
                 search.add(o);
             }
         }
@@ -205,7 +221,8 @@ public class Utils {
             System.out.println(o.toString());
         }
     }
-    public static void searchVehicleByID(){
+
+    public static void searchVehicleByID() {
         String ID;
         while (true) {
             ID = Validation.getNoneBlankString("Input id: ", "ID invalid");
@@ -216,5 +233,66 @@ public class Utils {
                 System.out.println("ID must be VE_xxxxx");
             }
         }
+    }
+
+    public static void showAll() {
+        for (Vehicle o : ve) {
+            System.out.println(o.toString());
+        }
+    }
+
+    public static void showAllDescending() {
+        List<Vehicle> a = loadData();
+        Collections.sort(a, new Comparator<Vehicle>() {
+            @Override
+            public int compare(Vehicle t, Vehicle t1) {
+                return (int) (t1.getPrice() - t.getPrice());
+            }
+        });
+        for (Vehicle o : a) {
+            System.out.println(o.toString());
+        }
+    }
+
+    public static void saveToFile() {
+        System.out.println("");
+        String file = "data.txt";
+        if (oldsize == 0) {
+            try {
+                FileWriter fw = new FileWriter(file);
+                for (int i = 0; i < ve.size(); i++) {
+                    fw.write(ve.get(i).toString() + "\n");
+                }
+                fw.close();
+            } catch (Exception e) {
+
+            }
+            oldsize = ve.size();
+        } else if (ve.size() > oldsize) {
+            try {
+                FileWriter fw = new FileWriter(file);
+                for (int i = oldsize; i < ve.size(); i++) {
+                    fw.write(ve.get(i).toString() + "\n");
+                }
+                fw.close();
+            } catch (Exception e) {
+
+            }
+        }
+        System.out.println("SAVE SUCCESSFULLY");
+    }
+
+    public static void showAllAcending() {
+        List<Vehicle> a = loadData();
+        Collections.sort(a, new Comparator<Vehicle>() {
+            @Override
+            public int compare(Vehicle t, Vehicle t1) {
+                return (int) (t.getPrice() - t1.getPrice());
+            }
+        });
+        for (Vehicle o : a) {
+            System.out.println(o.toString());
+        }
+        System.out.println("ID must be VE_xxxxx");
     }
 }
