@@ -22,17 +22,59 @@ public class Main {
                     Utils.deleteVehicle();
                     break;
                 case 5:
+                    int func5;
+                    if (Utils.ve.size() == 0) {
+                        System.out.println("");
+                        System.out.println("LIST VEHICLE EMPTY TO SEARCH");
+                        Utils.goBackMainMenu();
+                        break;
+                    }
+                    do {
+                        Utils.subMenuSearch();
+                        func5 = Validation.getInt("Choose your option: ", "Please type number again");
+                        switch (func5) {
+                            case 1:
+                                Utils.searchVehicleByName();
+                                break;
+                            case 2:
+                                Utils.searchVehicleByID();
+                                break;
+                            default:
+                                break;
+                        }
+                    } while (func5 < 3 && func5 > 0);
                     break;
                 case 6:
-                    break;
-                case 7:
-                    Utils.saveToFile();
-                    break;
-                case 8:
+                    int func6;
+                    if (Utils.ve.size() == 0) {
+                        System.out.println("");
+                        System.out.println("LIST VEHICLE EMPTY TO SHOW");
+                        Utils.goBackMainMenu();
+                        break;
+                    }
+                    do {
+                        Utils.subMenuShow();
+                        func6 = Validation.getInt("Choose your option: ", "Please type number again");
+                        switch (func6) {
+                            case 1:
+                                Utils.showAll();
+                                break;
+                            case 2:
+                                Utils.showAllByType();
+                                break;
+                            case 3:
+                                Utils.showAllDescending();
+                                break;
+                            case 4:
+                                Utils.showTypeDescending();
+                            default:
+                                break;
+                        }
+                    } while (func6 < 5 && func6 > 0);
                     break;
                 default:
                     break;
             }
-        } while (choose < 9 && choose > 0);
+        } while (choose < 7 && choose > 0);
     }
 }
