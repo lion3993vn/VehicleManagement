@@ -9,7 +9,7 @@ public class Validation {
         int choose;
         do {
             try {
-                System.out.println(mess);
+                System.out.print(mess);
                 choose = Integer.parseInt(sc.nextLine());
                 break;
             } catch (Exception e) {

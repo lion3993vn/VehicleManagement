@@ -16,6 +16,7 @@ public class Utils {
     public static List<Vehicle> ve = new ArrayList<>();
     private static Scanner sc = new Scanner(System.in);
     public static int oldsize;
+    private static int count;
 
     public static void mainMenu() {
         System.out.println("");
@@ -42,7 +43,7 @@ public class Utils {
     }
 
     public static List<Vehicle> loadData() {
-        String file = "Vehicle.txt";
+        String file = "data.txt";
         List<Vehicle> a = new ArrayList<>();
         File f = new File(file);
         if (f.exists()) {
@@ -97,7 +98,6 @@ public class Utils {
             }
         }
         ve.add(new Vehicle(ID, name, color, price, brand, type, year));
-        System.out.println(ve.size());
         System.out.println("ADD SUCCESSFULLY");
 
     }
@@ -178,6 +178,7 @@ public class Utils {
             if (!type.isEmpty() || !type.equals(" ")) {
                 getVehicle(s).setBrand(brand);
             }
+            count++;
             System.out.println(getVehicle(s).toString());
         } else {
             System.out.println("Vehicle does not exist");
@@ -241,12 +242,12 @@ public class Utils {
         }
     }
 
-    public static void showAllDescending() {
+    public static void showAllDescendingByType() {
         List<Vehicle> a = loadData();
         Collections.sort(a, new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle t, Vehicle t1) {
-                return (int) (t1.getPrice() - t.getPrice());
+                return t1.getName().compareTo(t.getName());
             }
         });
         for (Vehicle o : a) {
@@ -257,7 +258,7 @@ public class Utils {
     public static void saveToFile() {
         System.out.println("");
         String file = "data.txt";
-        if (oldsize == 0) {
+        if (oldsize == 0 || count > 0) {
             try {
                 FileWriter fw = new FileWriter(file);
                 for (int i = 0; i < ve.size(); i++) {
@@ -268,9 +269,10 @@ public class Utils {
 
             }
             oldsize = ve.size();
+            count = 0;
         } else if (ve.size() > oldsize) {
             try {
-                FileWriter fw = new FileWriter(file);
+                FileWriter fw = new FileWriter(file, true);
                 for (int i = oldsize; i < ve.size(); i++) {
                     fw.write(ve.get(i).toString() + "\n");
                 }
@@ -282,12 +284,12 @@ public class Utils {
         System.out.println("SAVE SUCCESSFULLY");
     }
 
-    public static void showAllAcending() {
+    public static void showAllDescendingByPrice() {
         List<Vehicle> a = loadData();
         Collections.sort(a, new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle t, Vehicle t1) {
-                return (int) (t.getPrice() - t1.getPrice());
+                return (int) (t1.getPrice() - t.getPrice());
             }
         });
         for (Vehicle o : a) {
@@ -295,4 +297,5 @@ public class Utils {
         }
         System.out.println("ID must be VE_xxxxx");
     }
+
 }
