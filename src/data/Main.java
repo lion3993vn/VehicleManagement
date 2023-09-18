@@ -4,9 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
         int choose;
+        Utils.ve = Utils.loadData();
         do {
             Utils.mainMenu();
-            Utils.ve = Utils.loadData();
             choose = Validation.getInt("Choose your option: ", "Please type number again");
             switch (choose) {
                 case 1:
@@ -26,6 +26,7 @@ public class Main {
                 case 6:
                     break;
                 case 7:
+                    Utils.saveToFile();
                     break;
                 case 8:
                     break;
