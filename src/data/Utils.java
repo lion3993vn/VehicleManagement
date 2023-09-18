@@ -115,6 +115,7 @@ public class Utils {
             }
         }
         ve.add(new Vehicle(ID, name, color, price, brand, type, year));
+        saveToFile();
         System.out.println("ADD SUCCESSFULLY");
 
     }
