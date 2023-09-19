@@ -1,2 +1,9 @@
-VE12344,tai,blue,5.0,6,bmw,2003
-VE12346,jcungdc,yellow,5.0,6,rr,2012
+VE12343,fpt,red,7000.0,Lamborghini,Sport,2005
+VE12342,demon,Black,9000.0,Honda,SUV,2007
+VE12341,smoke,Grey,10000.0,Huyndai,SUV,2008
+VE12340,pace,Purple,15000.0,Rolls-Royce,Coupe,2005
+VE12346,kazam,Green,10000.0,Seat,Pickup,2015
+VE12348,burn,Red,5000.0,Lamborghini,Minivan,2019
+VE12349,fpt,Yellow,7000.0,Sedan,Minibus,2020
+VE12347,thanos,Purple,6000.0,BMW,Sport,2025
+VE12338,captain,White,9000.0,Porsche,Roadster,2027
