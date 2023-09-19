@@ -107,7 +107,7 @@ public class Utils {
         int year;
         while (true) {
             year = Validation.getInt("Year: ", "Year not valid");
-            if (year <= 0 || year >= 2023) {
+            if (year <= 0 || year > 2023) {
                 System.err.println("Year not valid");
             } else {
                 break;
@@ -119,7 +119,6 @@ public class Utils {
         System.out.println("");
         System.out.println("CREATE SUCCESSFULLY");
         goBackMainMenu();
-
     }
 
     public static Vehicle getVehicle(String id) {
@@ -210,9 +209,8 @@ public class Utils {
                 System.out.print("Enter new year: ");
                 String year = sc.nextLine();
                 try {
-                    if (Integer.parseInt(year) <= 0 || Integer.parseInt(year) > 2023) {
-                        throw new Exception();
-                    } else if (!year.isEmpty()) {
+                    if(year.isEmpty()) break;
+                    if (Integer.parseInt(year) >= 0 || Integer.parseInt(year) <= 2023) {
                         getVehicle(s).setProductYear(Integer.parseInt(year));
                     }
                     break;
