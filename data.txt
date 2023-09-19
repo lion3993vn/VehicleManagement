@@ -5,5 +5,5 @@ VE12340,pace,Purple,15000.0,Rolls-Royce,Coupe,2005
 VE12346,kazam,Green,10000.0,Seat,Pickup,2015
 VE12348,burn,Red,5000.0,Lamborghini,Minivan,2019
 VE12349,fpt,Yellow,7000.0,Sedan,Minibus,2020
-VE12347,thanos,Purple,6000.0,BMW,Sport,2025
+VE12347,thanos,Purple,6000.0,BMW,Sport,2023
 VE12338,captain,White,9000.0,Porsche,Roadster,2027

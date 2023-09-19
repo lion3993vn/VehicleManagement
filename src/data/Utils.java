@@ -107,7 +107,7 @@ public class Utils {
         int year;
         while (true) {
             year = Validation.getInt("Year: ", "Year not valid");
-            if (year <= 0) {
+            if (year <= 0 || year >= 2023) {
                 System.err.println("Year not valid");
             } else {
                 break;
@@ -196,7 +196,7 @@ public class Utils {
                     System.err.println("Price must be real number");
                 }
             }
-            System.out.print("Enter new Brand: ");
+            System.out.print("Enter new brand: ");
             String brand = sc.nextLine();
             if (!brand.isEmpty() && !brand.equals(" ")) {
                 getVehicle(s).setBrand(brand);
@@ -210,12 +210,14 @@ public class Utils {
                 System.out.print("Enter new year: ");
                 String year = sc.nextLine();
                 try {
-                    if (!year.isEmpty() && Integer.parseInt(year) > 0) {
+                    if (Integer.parseInt(year) <= 0 || Integer.parseInt(year) > 2023) {
+                        throw new Exception();
+                    } else if (!year.isEmpty()) {
                         getVehicle(s).setProductYear(Integer.parseInt(year));
                     }
                     break;
                 } catch (Exception e) {
-                    System.err.println("Year must be real number");
+                    System.err.println("Year invalid");
                 }
             }
             count++;
@@ -223,18 +225,13 @@ public class Utils {
             System.out.println("");
             System.out.println("VEHICLE UPDATE:");
             System.out.println("");
-            System.out.println("======================================"
-                    + "=========================================");
-            System.out.printf("| %-8s | %-8s | %-8s | %-8s | %-12s | %-8s | %-5s |\n",
-                    "ID", "Name", "Color", "Price", "Brand", "Type", "Year");
-            System.out.println("======================================"
-                    + "=========================================");
+            layoutPrint();
             Vehicle o = getVehicle(s);
-            System.out.printf("| %-8s | %-8s | %-8s | %-8.2f | %-12s | %-8s | %-5d |\n",
+            System.out.printf("| %-8s | %-8s | %-10s | %-8.2f | %-12s | %-8s | %-5d |\n",
                     o.getId(), o.getName(), o.getColor(), o.getPrice(), o.getBrand(),
                     o.getType(), o.getProductYear());
             System.out.println("======================================"
-                    + "=========================================");
+                    + "===========================================");
         } else {
             System.out.println("Vehicle does not exist");
         }
@@ -247,6 +244,15 @@ public class Utils {
         System.out.println("| 1. Accept Delete                  |");
         System.out.println("| Other. Cancel                     |");
         System.out.println("=====================================");
+    }
+
+    public static void layoutPrint() {
+        System.out.println("========================================"
+                + "=========================================");
+        System.out.printf("| %-8s | %-8s | %-10s | %-8s | %-12s | %-8s | %-5s |\n",
+                "ID", "Name", "Color", "Price", "Brand", "Type", "Year");
+        System.out.println("======================================"
+                + "===========================================");
     }
 
     public static void deleteVehicle() {
@@ -300,19 +306,14 @@ public class Utils {
                 return (int) (t1.getPrice() - t.getPrice());
             }
         });
-        System.out.println("======================================"
-                + "=========================================");
-        System.out.printf("| %-8s | %-8s | %-8s | %-8s | %-12s | %-8s | %-5s |\n",
-                "ID", "Name", "Color", "Price", "Brand", "Type", "Year");
-        System.out.println("======================================"
-                + "=========================================");
+        layoutPrint();
         for (Vehicle o : search) {
-            System.out.printf("| %-8s | %-8s | %-8s | %-8.2f | %-12s | %-8s | %-5d |\n",
+            System.out.printf("| %-8s | %-8s | %-10s | %-8.2f | %-12s | %-8s | %-5d |\n",
                     o.getId(), o.getName(), o.getColor(), o.getPrice(), o.getBrand(),
                     o.getType(), o.getProductYear());
         }
         System.out.println("======================================"
-                + "=========================================");
+                + "===========================================");
         goBackMainMenu();
     }
 
@@ -332,37 +333,27 @@ public class Utils {
             System.out.println("");
             System.out.println("NO VEHICLE FOUND WITH THAT ID");
         } else {
-            System.out.println("======================================"
-                    + "=========================================");
-            System.out.printf("| %-8s | %-8s | %-8s | %-8s | %-12s | %-8s | %-5s |\n",
-                    "ID", "Name", "Color", "Price", "Brand", "Type", "Year");
-            System.out.println("======================================"
-                    + "=========================================");
+            layoutPrint();
             Vehicle o = getVehicle(ID);
-            System.out.printf("| %-8s | %-8s | %-8s | %-8.2f | %-12s | %-8s | %-5d |\n",
+            System.out.printf("| %-8s | %-8s | %-10s | %-8.2f | %-12s | %-8s | %-5d |\n",
                     o.getId(), o.getName(), o.getColor(), o.getPrice(), o.getBrand(),
                     o.getType(), o.getProductYear());
             System.out.println("======================================"
-                    + "=========================================");
+                    + "===========================================");
         }
         goBackMainMenu();
     }
 
     public static void showAll() {
         System.out.println("");
-        System.out.println("======================================"
-                + "=========================================");
-        System.out.printf("| %-8s | %-8s | %-8s | %-8s | %-12s | %-8s | %-5s |\n",
-                "ID", "Name", "Color", "Price", "Brand", "Type", "Year");
-        System.out.println("======================================"
-                + "=========================================");
+        layoutPrint();
         for (Vehicle o : ve) {
-            System.out.printf("| %-8s | %-8s | %-8s | %-8.2f | %-12s | %-8s | %-5d |\n",
+            System.out.printf("| %-8s | %-8s | %-10s | %-8.2f | %-12s | %-8s | %-5d |\n",
                     o.getId(), o.getName(), o.getColor(), o.getPrice(), o.getBrand(),
                     o.getType(), o.getProductYear());
         }
         System.out.println("====================================="
-                + "==========================================");
+                + "============================================");
         goBackMainMenu();
     }
 
@@ -401,14 +392,9 @@ public class Utils {
         for (Vehicle o : ve) {
             if (o.getType().equalsIgnoreCase(s)) {
                 if (!check) {
-                    System.out.println("====================================="
-                            + "==========================================");
-                    System.out.printf("| %-8s | %-8s | %-8s | %-8s | %-12s | %-8s | %-5s |\n",
-                            "ID", "Name", "Color", "Price", "Brand", "Type", "Year");
-                    System.out.println("====================================="
-                            + "==========================================");
+                    layoutPrint();
                 }
-                System.out.printf("| %-8s | %-8s | %-8s | %-8.2f | %-12s | %-8s | %-5d |\n",
+                System.out.printf("| %-8s | %-8s | %-10s | %-8.2f | %-12s | %-8s | %-5d |\n",
                         o.getId(), o.getName(), o.getColor(), o.getPrice(), o.getBrand(),
                         o.getType(), o.getProductYear());
                 check = true;
@@ -418,7 +404,7 @@ public class Utils {
             System.out.println("No Vehicle Type found!");
         } else {
             System.out.println("======================================="
-                    + "========================================");
+                    + "==========================================");
         }
         goBackMainMenu();
     }
@@ -430,12 +416,7 @@ public class Utils {
             System.out.println("No Vehicle to show");
             return;
         }
-        System.out.println("====================================="
-                + "==========================================");
-        System.out.printf("| %-8s | %-8s | %-8s | %-8s | %-12s | %-8s | %-5s |\n",
-                "ID", "Name", "Color", "Price", "Brand", "Type", "Year");
-        System.out.println("====================================="
-                + "==========================================");
+        layoutPrint();
         Collections.sort(des, new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle t, Vehicle t1) {
@@ -443,12 +424,12 @@ public class Utils {
             }
         });
         for (Vehicle de : des) {
-            System.out.printf("| %-8s | %-8s | %-8s | %-8.2f | %-12s | %-8s | %-5d |\n",
+            System.out.printf("| %-8s | %-8s | %-10s | %-8.2f | %-12s | %-8s | %-5d |\n",
                     de.getId(), de.getName(), de.getColor(), de.getPrice(), de.getBrand(),
                     de.getType(), de.getProductYear());
         }
         System.out.println("====================================="
-                + "==========================================");
+                + "============================================");
         goBackMainMenu();
     }
 
@@ -471,19 +452,14 @@ public class Utils {
                 return (int) (t1.getPrice() - t.getPrice());
             }
         });
-        System.out.println("====================================="
-                + "==========================================");
-        System.out.printf("| %-8s | %-8s | %-8s | %-8s | %-12s | %-8s | %-5s |\n",
-                "ID", "Name", "Color", "Price", "Brand", "Type", "Year");
-        System.out.println("====================================="
-                + "==========================================");
+        layoutPrint();
         for (Vehicle de : des) {
-            System.out.printf("| %-8s | %-8s | %-8s | %-8.2f | %-12s | %-8s | %-5d |\n",
+            System.out.printf("| %-8s | %-8s | %-10s | %-8.2f | %-12s | %-8s | %-5d |\n",
                     de.getId(), de.getName(), de.getColor(), de.getPrice(), de.getBrand(),
                     de.getType(), de.getProductYear());
         }
         System.out.println("====================================="
-                + "==========================================");
+                + "============================================");
         goBackMainMenu();
     }
 
